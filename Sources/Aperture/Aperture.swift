@@ -171,6 +171,22 @@ public final class Aperture: NSObject {
 	public func resume() {
 		output.resumeRecording()
 	}
+    
+    private func setVolume(_ volume: Float) {
+        if let audioConnection = self.output.connection(with: .audio) {
+            for channel in audioConnection.audioChannels {
+                channel.volume = volume
+            }
+        }
+    }
+    
+    public func muteAudio() {
+        setVolume(0.0)
+    }
+    
+    public func unmuteAudio() {
+        setVolume(1.0)
+    }
 }
 
 extension Aperture: AVCaptureFileOutputRecordingDelegate {
